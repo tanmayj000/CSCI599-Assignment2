@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8">
+		<title>assignment2</title>
+		<style>
+			body { margin: 0; }
+		</style>
+    <script type="importmap">
+        {
+          "imports": {
+            "three": "https://unpkg.com/three@0.147.0/build/three.module.js",
+            "three/addons/": "https://unpkg.com/three@0.147.0/examples/jsm/"
+          }
+        }
+    </script>
+	</head>
+	<body>
+		<h1 style="text-align: center;">Assignment 2</h1>
+		
+		<h2>Algorithm Overview and Execution</h2>
+		<h3>Reconstruction via Structure from Motion (SfM)</h3>
+		<p>
+			Below is the simplified algorithm used for SfM, with detailed explanations available in the code comments:
+			<ol>
+				<li>Initiate the process by selecting the first two images to estimate the initial pose and perform triangulation.</li>
+				<li>Carry out initial triangulation using the selected image pair.</li>
+				<li>Create an initial 3D point cloud and assess the reprojection error for these images.</li>
+				<li>Sequentially integrate each subsequent image by:
+					<ol>
+						<li>Calculating its camera pose.</li>
+						<li>Triangulating new points considering the current viewpoint.</li>
+						<li>Expanding the 3D point cloud with the newly triangulated points and recalculating reprojection errors for the updated camera perspective.</li>
+					</ol>
+				</li>
+			</ol>
+		</p>
+		
+		<h3>Reprojection Error Calculation</h3>
+		<p>
+			The reprojection error is determined through the steps below:
+			<ol>
+				<li>Collect image data and features, discarding references to non-valid 3D points.</li>
+				<li>Derive 3D points from the valid references and project them back onto the image plane.</li>
+				<li>Measure the discrepancy between the original and projected 2D points, omitting significant outliers.</li>
+				<li>Compute the mean reprojection error.</li>
+				<li>Visualize the final analysis.</li>
+			</ol>
+		</p>
+		
+		<h3>Point Triangulation for New Views</h3>
+		<p>
+			To effectively filter outliers, a mix of reprojection error assessment and depth analysis was employed, yielding optimal results. The procedure for incorporating new viewpoints involves:
+			<ol>
+				<li>Scanning through existing views to identify matching features with the new image.</li>
+				<li>Refining matches to only include those not yet associated with any point in the cloud.</li>
+				<li>For each relevant pair of matched views:
+					<ol>
+						<li>Match alignment and extraction of corresponding 2D points from each image.</li>
+						<li>Execution of triangulation to generate 3D points across the views.</li>
+						<li>Application of filters to the triangulated points based on reprojection errors and spatial positioning, adhering to dynamically set thresholds.</li>
+						<li>Incorporation of the validated points into the overarching point cloud and updating reference indices for the new image.</li>
+					</ol>
+				</li>
+			</ol>
+		</p>
+
+		<p>
+			Extra credit: Experimented with outlier detection and removal techniques. 
+		</p>
+
+		<p>
+			Note: The point cloud visualizations are interactive. Please use your mouse the change the camera view. 
+		</p>
+
+
+
+		<h2>Structure From Motion Results:</h2>
+        <div id="container"></div>
+		<script type="module" src="../js/assignment2.js"></script>
+
+		<p>
+			Note: You can find additional results in assets/assignment2/results
+		</p>
+		
+
+	</body>
+</html>
