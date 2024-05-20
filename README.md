@@ -1,5 +1,5 @@
 # CSCI599
-3D Vision Assignment Template for Spring 2024.
+I performed this project as a part of the CSCI-599 3D Vision course I took in the Spring 2024 semester.
 
 ## Table of Contents
 - [How to use](#how-to-use)
